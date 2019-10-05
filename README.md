@@ -1,4 +1,7 @@
-# corner-coffee-shop
+# Corner Coffee Shop Vue SPA
+This repo is for the tutorial series I did on YouTube creating a Vue SPA.
+
+Watch the tutorial series on my [YouTube channel]('https://www.youtube.com/QuentinWatt').
 
 ## Project setup
 ```
