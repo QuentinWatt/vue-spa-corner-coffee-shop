@@ -8,10 +8,32 @@
     <span id="site-logo" class="font-bold text-xl">
       Little Corner Coffee Shop
     </span>
-    <nav v-if="showMenu">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
+
+    <transition name="menu">
+      <div
+        v-if="showMenu"
+        class="menu-mask fixed z-50 top-0 left-0 w-full h-full flex bg-black-50"
+        @click="closeMenu"
+      >
+        <div class="menu-container w-4/5 p-6 bg-white shadow-lg" @click.stop>
+          <nav class="relative">
+            <FontAwesomeIcon
+              :icon="['fas', 'times']"
+              class="text-2xl absolute top-0 right-0"
+              @click="closeMenu"
+            />
+            <ul>
+              <li>
+                <router-link to="/">Home</router-link>
+              </li>
+              <li>
+                <router-link to="/about">About</router-link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </transition>
   </header>
 </template>
 
@@ -26,7 +48,34 @@ export default {
   methods: {
     toggleShowMenu() {
       this.showMenu = !this.showMenu;
+    },
+    closeMenu() {
+      this.showMenu = false;
     }
   }
 };
 </script>
+
+<style scoped>
+.menu-mask {
+  transition: opacity 0.2s ease;
+}
+
+.menu-container {
+  transition: all 0.5s ease;
+}
+
+.menu-enter {
+  opacity: 0;
+}
+
+.menu-leave-active {
+  opacity: 0;
+}
+
+.menu-enter .menu-container,
+.menu-leave-active .menu-container {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+</style>
