@@ -1,10 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import store from "./store";
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -24,3 +25,10 @@ export default new Router({
     }
   ]
 });
+
+router.beforeResolve((to, from, next) => {
+  store.dispatch("closeMenu");
+  return next();
+});
+
+export default router;
