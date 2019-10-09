@@ -3,7 +3,7 @@
     <FontAwesomeIcon
       :icon="['fas', 'bars']"
       class="text-2xl"
-      @click="toggleShowMenu"
+      @click="openMenu"
     />
     <span id="site-logo" class="font-bold text-xl">
       Little Corner Coffee Shop
@@ -11,7 +11,7 @@
 
     <transition name="menu">
       <div
-        v-if="showMenu"
+        v-if="$store.getters.showMenuStatus"
         class="menu-mask fixed z-50 top-0 left-0 w-full h-full flex bg-black-50"
         @click="closeMenu"
       >
@@ -40,17 +40,12 @@
 <script>
 export default {
   name: "HeaderNavigation",
-  data() {
-    return {
-      showMenu: false
-    };
-  },
   methods: {
-    toggleShowMenu() {
-      this.showMenu = !this.showMenu;
+    openMenu() {
+      this.$store.dispatch("openMenu");
     },
     closeMenu() {
-      this.showMenu = false;
+      this.$store.dispatch("closeMenu");
     }
   }
 };
@@ -62,7 +57,7 @@ export default {
 }
 
 .menu-container {
-  transition: all 0.5s ease;
+  transition: all 0.2s ease;
 }
 
 .menu-enter {
