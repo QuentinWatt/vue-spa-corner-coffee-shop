@@ -1,13 +1,27 @@
 <template>
-  <header class="border-b py-3 px-3">
-    <FontAwesomeIcon
-      :icon="['fas', 'bars']"
-      class="text-2xl"
-      @click="openMenu"
-    />
-    <span id="site-logo" class="font-bold text-xl">
-      Little Corner Coffee Shop
-    </span>
+  <header class="border-b px-3">
+    <div class="flex items-center h-16">
+      <FontAwesomeIcon
+        :icon="['fas', 'bars']"
+        class="text-2xl lg:hidden mr-5"
+        @click="openMenu"
+      />
+      <span id="site-logo" class="font-bold text-xl mr-5">
+        Little Coffee Shop
+      </span>
+      <nav class="relative hidden lg:block">
+        <ul class="flex">
+          <li v-for="(menuItem, index) in mainMenu" :key="index">
+            <router-link
+              :to="menuItem.route"
+              class="px-3 flex h-16 items-center"
+            >
+              {{ menuItem.label }}
+            </router-link>
+          </li>
+        </ul>
+      </nav>
+    </div>
 
     <transition name="menu">
       <div
@@ -22,12 +36,17 @@
               class="text-2xl absolute top-0 right-0"
               @click="closeMenu"
             />
-            <ul>
-              <li>
-                <router-link to="/">Home</router-link>
-              </li>
-              <li>
-                <router-link to="/about">About</router-link>
+            <span id="site-logo-mobile" class="font-bold text-xl mr-5">
+              Little Coffee Shop
+            </span>
+            <ul class="border-t mt-3">
+              <li v-for="(menuItem, index) in mainMenu" :key="index">
+                <router-link
+                  :to="menuItem.route"
+                  class="border-b py-3 px-3 block"
+                >
+                  {{ menuItem.label }}
+                </router-link>
               </li>
             </ul>
           </nav>
@@ -38,8 +57,14 @@
 </template>
 
 <script>
+import { mainMenu } from "../constants/main-menu";
 export default {
   name: "HeaderNavigation",
+  data() {
+    return {
+      mainMenu: mainMenu
+    };
+  },
   methods: {
     openMenu() {
       this.$store.dispatch("openMenu");
@@ -52,6 +77,10 @@ export default {
 </script>
 
 <style scoped>
+.router-link-exact-active {
+  @apply bg-gray-200;
+}
+
 .menu-mask {
   transition: opacity 0.2s ease;
 }
