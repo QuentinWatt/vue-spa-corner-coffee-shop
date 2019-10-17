@@ -1,6 +1,6 @@
 <template>
   <header class="border-b px-3">
-    <div class="flex items-center h-16">
+    <div class="flex items-center h-16 container mx-auto">
       <FontAwesomeIcon
         :icon="['fas', 'bars']"
         class="text-2xl lg:hidden mr-5"
